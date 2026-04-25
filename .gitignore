@@ -1,0 +1,18 @@
+# Environments
+.env
+
+# Docker attached data volumes (Never commit database/cache data!)
+postgres/data/
+redis/data/
+prometheus/data/
+grafana/data/
+caddy/data/
+caddy/config/
+
+# Backups
+scripts/backups/
+*.sql.gz
+*.tar.gz
+
+# Logs
+*.log
