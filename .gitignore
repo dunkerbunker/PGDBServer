@@ -1,5 +1,6 @@
 # Environments
 .env
+DEPLOYMENT_GUIDE.md
 
 # Docker attached data volumes (Never commit database/cache data!)
 postgres/data/
