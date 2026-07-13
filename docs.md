@@ -1,6 +1,20 @@
 # Database Management Cheatsheet
 
-This guide covers common administrative tasks for your DigitalOcean Database Infrastructure.
+This guide covers common administrative tasks for the Contabo database infrastructure.
+
+## Production filesystem layout
+
+The production checkout is `/opt/stacks/PGDBServer`. PostgreSQL and Redis
+state are kept outside Git under `/var/lib/pgdbserver`, secrets are supplied by
+the ignored `.env` symlink to `/etc/pgdbserver/pgdbserver.env`, and backups are
+written to `/var/backups/pgdbserver`.
+
+Deploy manually with:
+
+```bash
+cd /opt/stacks/PGDBServer
+docker compose -p pgdbserver up -d
+```
 
 ---
 
@@ -21,8 +35,13 @@ SSH into your droplet and run (replace `<YOUR_IP>`):
 sudo iptables -I DOCKER-USER 1 -s <YOUR_IP> -p tcp -m multiport --dports 5432,6379 -j ACCEPT
 ```
 
-> [!NOTE]
-> These rules are reset if the server reboots or Docker restarts unless you save them. To make them permanent, update the `FE_SERVER_IP` in `.env` and run `sudo ./scripts/setup_firewall.sh`.
+### Persistence
+To make this rule permanent (so it survives a reboot or script re-run):
+1. Add `USER_LOCAL_IP=<YOUR_IP>` to your `.env` file for one IP, or `USER_LOCAL_IPS=<IP_1>,<IP_2>` for multiple IPs.
+2. Run the updated firewall script:
+   ```bash
+   sudo ./scripts/setup_firewall.sh
+   ```
 
 ---
 

@@ -7,7 +7,7 @@ set -e
 source "$(dirname "$0")/../.env"
 
 # Configuration
-BACKUP_DIR="/root/backups"
+BACKUP_DIR="/var/backups/pgdbserver"
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 DAY_OF_WEEK=$(date +"%u") # 1-7
 POSTGRES_CONTAINER="postgres_db"
